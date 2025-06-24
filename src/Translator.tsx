@@ -1,9 +1,33 @@
 import React from "react"
+import Select from "react-select";
 import AudioRecorder from "./AudioRecorder"
 import { QRCodeCanvas } from "qrcode.react"
 
 
 const SERVER_IP = "http://192.168.247.196:8000"
+
+const languageOptions = [
+  { value: "ar", label: "العربية" },
+  { value: "bn", label: "বাংলা" },
+  { value: "zh", label: "中文" },
+  { value: "en", label: "English" },
+  { value: "fr", label: "Français" },
+  { value: "de", label: "Deutsch" },
+  { value: "hi", label: "हिन्दी" },
+  { value: "id", label: "Bahasa Indonesia" },
+  { value: "it", label: "Italiano" },
+  { value: "ja", label: "日本語" },
+  { value: "ko", label: "한국어" },
+  { value: "pt", label: "Português" },
+  { value: "ru", label: "Русский" },
+  { value: "es", label: "Español" },
+  { value: "sw", label: "Kiswahili" },
+  { value: "th", label: "ไทย" },
+  { value: "tr", label: "Türkçe" },
+  { value: "uk", label: "Українська" },
+  { value: "ur", label: "اردو" },
+  { value: "vi", label: "Tiếng Việt" }
+];
 
 interface TranslatorProps {
   targetLang: string,
@@ -38,20 +62,24 @@ function TranslationBlock({
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4 w-full max-w-4xl mx-auto">
-      {/* Fila 1 */}
-      <div className="flex justify-between items-center gap-4">
+    <div className="flex flex-col justify-center items-center gap-4 p-4 w-full max-w-4xl mx-auto">
+      {/* row 1 */}
+      <div className="flex justify-between items-center gap-12">
         <label className="text-lg font-semibold whitespace-nowrap">Detección automática</label>
-        <input
-          type="text"
+        <Select
           className="flex-1 w-fit px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-          placeholder="Idioma destino (ej. en, es, fr)"
-          value={targetLang}
-          onChange={(e) => setTargetLang(e.target.value)}
-        />
+          placeholder="Idioma de destino"
+          value={{
+            label: targetLang,
+            value: targetLang
+          }}
+          options={languageOptions}
+          onChange={(option) => setTargetLang(option?.value || 'en')
+          }
+        ></Select>
       </div>
 
-      {/* Fila 2 */}
+      {/* row 2 */}
       <div className="flex gap-4">
         <textarea
           className="w-1/2 h-48 p-3 border rounded-md resize-none focus:outline-none focus:ring focus:ring-blue-400"
