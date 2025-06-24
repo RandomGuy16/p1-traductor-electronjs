@@ -11,4 +11,14 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.js'
   }
+  /*
+  server: {
+    proxy: {
+      '/translate': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  }*/
 });

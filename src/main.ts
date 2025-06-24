@@ -19,6 +19,44 @@ const createWindow = () => {
     },
   });
 
+  // CORS handling
+  /*
+  mainWindow.webContents.session.webRequest.onBeforeSendHeaders(
+    (details, callback) => {
+      callback({
+        requestHeaders: {
+          ...details.requestHeaders,
+          'Origin': '*'
+        }
+      });
+    }
+  );
+
+  mainWindow.webContents.session.webRequest.onHeadersReceived(
+    (details, callback) => {
+      callback({
+        responseHeaders: {
+          ...details.responseHeaders,
+          'Access-Control-Allow-Origin': ['http://localhost:8000'],
+          'Access-Control-Allow-Headers': ['Content-Type', 'Authorization'],
+          'Access-Control-Allow-Methods': ['POST']
+        }
+      });
+    }
+  );
+  */
+
+  // Add permission handling
+  mainWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
+    const allowedPermissions = ['media']; // audio permission
+    if (allowedPermissions.includes(permission)) {
+      callback(true); // permission granted
+    }
+    else {
+      callback(false); // permission denied
+    }
+  });
+
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
